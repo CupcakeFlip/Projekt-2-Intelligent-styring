@@ -1,3 +1,0 @@
-# hello
-# yesyes
-# u ejte
