@@ -1,0 +1,10 @@
+h1,
+#can {
+  text-align: center;
+}
+
+canvas {
+  display: inline;
+  width: 600px;
+  height: 600px;
+}

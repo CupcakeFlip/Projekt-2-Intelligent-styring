@@ -46,3 +46,11 @@ Ledt efter API
 Kort dag, da fremlæggelse
 Fandt API,
 Undersøger kamera genkendelse i forhold til rubik's cube.
+
+---
+
+## 09-02-2023
+
+Fået undersøgt hvordan kamera skal kunne finde rubiks cubes farver - canvas
+Fået startet API'en for at kunne begynde at få farve fra billede til den.
+også fået oprettet CSS fil.

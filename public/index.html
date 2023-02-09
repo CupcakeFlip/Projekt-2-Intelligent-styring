@@ -8,17 +8,28 @@
     <script src="https://cdn.jsdelivr.net/npm/rubiks-cube-solver@1.2.0/lib/index.common.min.js"></script>
 
     <!-- Egen javascript -->
-    <script src="js/py_cam.js" defer></script>
+    <!--<script src="js/py_cam.js" defer></script>-->
+    <script src="js/rubicksCube.js" defer></script>
+    <script src="js/colorGrabber.js" defer></script>
+
+    <link rel="stylesheet" href="css/pretty.css" />
 
     <title>Simple ESP32CAM with MicroPython demo</title>
   </head>
 
   <body>
     <h1>Simple ESP32CAM with MicroPython demo</h1>
-  
-    <img id="cam" src="http://172.20.10.9/live" crossorigin="anonymous" />
-    <canvas style="display: none"></canvas>
+    <!--
+
+  <img id="cam" src="http://172.20.10.9/live" crossorigin="anonymous" />
+  <canvas style="display: none"></canvas>
+-->
+    <div id="can">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div style="display: none">
+      <img id="test" src="picture/rubiksCubeTest.jpg" />
+    </div>
   </body>
-
 </html>
-
