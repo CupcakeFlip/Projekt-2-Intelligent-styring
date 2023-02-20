@@ -1,0 +1,11 @@
+hue, saturation, value:
+(h,S,V) = (hue, saturation, value)
+
+Hvid = (0<H<360, S<0.15, V>0.65)
+Red = (H<11, H>360, S>0.7, V>0.1)
+Orange = (11<H<45, S>0.15, V>0.75)
+Gul = (45<H<64,S>0.15, V>0.1)
+Grøn = (64<H<165, S>0.15, V>0.1)
+Blå = (165<H<300, S>0.15, V>0.1)
+
+360-255

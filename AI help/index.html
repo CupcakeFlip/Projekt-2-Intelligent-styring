@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="java.js" defer></script>
+    <script src="color.js" defer></script>
+    <title>Color Picker</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+      .color-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="backButton">Back</button>
+    <button id="nextButton">Next</button>
+    <button id="saveButton">Save</button>
+    <div id="result"></div>
+    <canvas id="canvas" width="600" height="600"></canvas>
+  </body>
+</html>

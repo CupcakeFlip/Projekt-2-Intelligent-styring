@@ -54,3 +54,10 @@ Undersøger kamera genkendelse i forhold til rubik's cube.
 Fået undersøgt hvordan kamera skal kunne finde rubiks cubes farver - canvas
 Fået startet API'en for at kunne begynde at få farve fra billede til den.
 også fået oprettet CSS fil.
+
+---
+
+## 20-02-2023
+Fået canvas til at kunne vise og analysere pixels
+
+skal finde ud af hvordan man diferentiere de forskellige farver fra hinanden.
