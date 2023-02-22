@@ -54,18 +54,6 @@ function analyseImage() {
 
       const numColors = averageRed.length;
 
-      /**
-       * @Remove
-       */
-      sumColor +=
-        Math.round(sumRed / numColors) +
-        Math.round(sumGreen / numColors) +
-        Math.round(sumBlue / numColors);
-
-      sumColorArray.push(sumColor);
-      //console.log("sumColor", sumColor);
-      // till here
-
       const red = Math.round(sumRed / numColors);
       const green = Math.round(sumGreen / numColors);
       const blue = Math.round(sumBlue / numColors);
@@ -83,14 +71,8 @@ function analyseImage() {
       
       colorNames.push(getHSV_ColorName(hsColor));
       
-      displayColorNames(colorName, x, y);
-      "hsv(" +
-        h +
-        "," +
-        Math.floor(s * 100) +
-        "%," +
-        Math.floor(v * 100) +
-        "%)";
+      displayColorNames(colorName, x, y); 
+      
       
 
       /*

@@ -60,4 +60,4 @@ også fået oprettet CSS fil.
 ## 20-02-2023
 Fået canvas til at kunne vise og analysere pixels
 
-skal finde ud af hvordan man diferentiere de forskellige farver fra hinanden.
+skal finde ud af hvordan man differentiere de forskellige farver fra hinanden.

@@ -3,7 +3,7 @@ const backButton = document.getElementById("backButton");
 const nextButton = document.getElementById("nextButton");
 const saveButton = document.getElementById("saveButton");
 //const resultDiv = document.getElementById("result");
-const result2Div = document.getElementById("result2");
+//const result2Div = document.getElementById("result2");
 
 const ctx = canvas.getContext("2d");
 
@@ -14,7 +14,7 @@ const images = [];
 } */
 
 for (let i = 1; i <= 6; i++) {
-  images.push("testCube/testCube (" + i + ").jpg");
+  images.push("picture/testCube/testCube (" + i + ").jpg");
 }
 
 let currentImageIndex = 0;
@@ -25,7 +25,7 @@ const targetWidth = 600;
 const targetHeight = 600;
 let sumColorArray = [];
 
-currentImage.addEventListener("load", () => {
+currentImage.addEventListener("load", function() {
   canvas.width = targetWidth;
   canvas.height = targetHeight;
   ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
@@ -56,7 +56,7 @@ backButton.addEventListener("click", function () {
   };
 });
 
-saveButton.addEventListener("click", () => {});
+saveButton.addEventListener("click", function() {});
 
 /**
  * Draws on the canvas, and captures where the pixelvalues are located,
