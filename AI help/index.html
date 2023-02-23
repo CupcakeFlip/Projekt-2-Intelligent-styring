@@ -1,28 +1,54 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script src="java.js" defer></script>
-    <script src="color.js" defer></script>
-    <title>Color Picker</title>
-    <style>
-      canvas {
-        border: 1px solid black;
-      }
-      .color-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    </style>
+        <head>
+          <style>
+            #randomstate { visibility: hidden; }
+          </style>
+        </head>
+
+        <body>
+          <p id="status"></p>
+          <p id="randomstate">
+            <button>Generate random scramble</button><br>
+            <span class="result"></span>
+          </p>
+
+          <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+          <script src="/cubejs/lib/cube.js"></script>
+          <script src="/cubejs/lib/async.js"></script>
+          <script src="demo.js"></script>
+        </body>
+  <!--
+
+    <head>
+      <script src="java.js" defer></script>
+      <script src="color.js" defer></script>
+      <title>Color Picker</title>
+      
+        
+        <style>
+          canvas {
+            border: 1px solid black;
+          }
+          .color-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+          }
+  </style>
+
   </head>
   <body>
-    <button id="backButton">Back</button>
-    <button id="nextButton">Next</button>
-    <button id="saveButton">Save</button>
-    <div id="result"></div>
-    <div id="result2"></div>
-    <canvas id="canvas" width="600" height="600"></canvas>
+
+    
+      
+      <button id="backButton">Back</button>
+      <button id="nextButton">Next</button>
+      <button id="saveButton">Save</button>
+      <div id="result"></div>
+      <div id="result2"></div>
+      <canvas id="canvas" width="600" height="600"></canvas>
+    
   </body>
-</html>
+-->

@@ -2,7 +2,8 @@ const canvas = document.getElementById("canvas");
 const backButton = document.getElementById("backButton");
 const nextButton = document.getElementById("nextButton");
 const saveButton = document.getElementById("saveButton");
-//const resultDiv = document.getElementById("result");
+const cubeMoves = document.getElementById("cubeMoves");
+const cube = document.getElementById("3DCube");
 //const result2Div = document.getElementById("result2");
 
 const ctx = canvas.getContext("2d");
@@ -23,9 +24,8 @@ currentImage.src = images[currentImageIndex];
 
 const targetWidth = 600;
 const targetHeight = 600;
-let sumColorArray = [];
 
-currentImage.addEventListener("load", function() {
+currentImage.addEventListener("load", function () {
   canvas.width = targetWidth;
   canvas.height = targetHeight;
   ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
@@ -33,6 +33,16 @@ currentImage.addEventListener("load", function() {
 });
 
 nextButton.addEventListener("click", function () {
+  allColorNames.push(colorNames);
+  console.log(allColorNames);
+  counter++;
+  if (counter === 6) {
+    colorToSide(allColorNames);
+
+    // resets the counter and the array of colornames
+    counter = 0;
+    allColorNames = [];
+  }
   // go to next image, or start over if at end of array
   currentImageIndex = (currentImageIndex + 1) % images.length;
   currentImage = new Image();
@@ -56,7 +66,21 @@ backButton.addEventListener("click", function () {
   };
 });
 
-saveButton.addEventListener("click", function() {});
+let allColorNames = [];
+let counter = 0;
+saveButton.addEventListener("click", function () {
+  allColorNames.push(colorNames);
+  console.log(allColorNames);
+
+  counter++;
+  if (counter === 6) {
+    colorToSide(allColorNames);
+
+    // resets the counter and the array of colornames
+    counter = 0;
+    allColorNames = [];
+  }
+}); 
 
 /**
  * Draws on the canvas, and captures where the pixelvalues are located,

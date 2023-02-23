@@ -8,3 +8,8 @@ canvas {
   width: 600px;
   height: 600px;
 }
+
+body>svg{
+	position:fixed;
+	
+}

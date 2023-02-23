@@ -34,3 +34,5 @@ function getColor(image) {
 
   return rgb;
 }
+
+

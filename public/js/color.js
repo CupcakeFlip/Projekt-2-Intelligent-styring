@@ -1,6 +1,5 @@
-let hsColors = [];
-let h, s, v;
-let hsColor = [];
+let colorNames = [];
+let h, s, v, colorName;
 
 /**
  * Analyses the image on the canvas, to find the colors from the middle of the 9 squares. It takes the average of 5 pixels in each square, and returns that to an array.
@@ -8,18 +7,13 @@ let hsColor = [];
  */
 function analyseImage() {
   // making sure to clear array every time function is called.
-  const colors = [];
-  const displayColorValuesHSV = [];
-  const colorNames = [];
-  sumColorArray = [];
-  hsColors = [];
+  colorNames = [];
 
-  for (let x = 0; x < 3; x++) {
-    for (let y = 0; y < 3; y++) {
-      let averageRed = [];
-      let averageGreen = [];
-      let averageBlue = [];
-
+  for (let y = 0; y < 3; y++) {
+    for (let x = 0; x < 3; x++) {
+      let totalRed = 0;
+      let totalGreen = 0;
+      let totalBlue = 0;
       /**
        * finds 5 pixel data and pushes them into an array.
        */
@@ -31,62 +25,28 @@ function analyseImage() {
           1
         ).data;
 
-        averageRed.push(pixelData[0]);
-        averageGreen.push(pixelData[1]);
-        averageBlue.push(pixelData[2]);
-
-        //console.log(averageRed, averageBlue, averageGreen);
+        // Calculate the sum of each color, for each pixel
+        totalRed += pixelData[0];
+        totalGreen += pixelData[1];
+        totalBlue += pixelData[2];
       }
 
-      let sumRed = 0;
-      let sumGreen = 0;
-      let sumBlue = 0;
-      let sumColor = 0;
+      const numColors = 5;
 
-      /**
-       * Calculate the sum of each color, for each pixel
-       */
-      for (let i = 0; i < 5; i++) {
-        sumRed += averageRed[i];
-        sumGreen += averageGreen[i];
-        sumBlue += averageBlue[i];
-      }
+      const red = Math.round(totalRed / numColors);
+      const green = Math.round(totalGreen / numColors);
+      const blue = Math.round(totalBlue / numColors);
 
-      const numColors = averageRed.length;
+      const [h, s, v] = rgbToHsv(red, green, blue);
 
-      const red = Math.round(sumRed / numColors);
-      const green = Math.round(sumGreen / numColors);
-      const blue = Math.round(sumBlue / numColors);
+      colorNames.push(getHSV_ColorName([h, s, v]));
 
-      const color = `rgb(${red} ,${green}, ${blue})`;
-
-      //console.log(sumRed, sumGreen, sumBlue, color, "x", x, "y", y);
-
-      //console.log("x", x, "y", y);
-
-      colors.push(color);
-
-      
-      rgbToHsv(red, green, blue);
-      
-      colorNames.push(getHSV_ColorName(hsColor));
-      
-      displayColorNames(colorName, x, y); 
-      
-      
-
-      /*
-       TODO: find what the average color is equal to, so find the range for red, orange, green, blue, white and yellow, find the span between for each color
-
-       */
+      displayColorNames(colorName, x, y);
 
       // Display the color of 9 pixels in the resultDiv
       //resultDiv.innerHTML = `Colors: ${hsColors.join(", ")}`;
-      //resultDiv.innerHTML = `Colors: ${displayColorValuesHSV.join(", ")}`;
-      
     }
   }
-  //console.log("sumcolorArray", sumColorArray);
   return;
 }
 
@@ -97,17 +57,18 @@ function analyseImage() {
  * @param {number} blue
  * @returns h, s, l
  */
+/*
 function rgbToHsl(red, green, blue) {
   (red /= 255), (green /= 255), (blue /= 255);
-
+  
   const max = Math.max(red, green, blue);
   const min = Math.min(red, green, blue);
   const diff = max - min;
-
+  
   let h,
-    s,
-    l = (max + min) / 2;
-
+  s,
+  l = (max + min) / 2;
+  
   if (diff === 0) {
     h = 0;
   } else if (max === red) {
@@ -117,31 +78,32 @@ function rgbToHsl(red, green, blue) {
   } else {
     h = (red - green) / diff + 4;
   }
-
+  
   h = Math.round(h * 60);
-
+  
   if (h < 0) {
     h += 360;
   }
-
+  
   if (diff === 0) {
     s = 0;
   } else {
     s = diff / (1 - Math.abs(2 * l - 1));
   }
-
+  
   s = Math.round(s * 100);
   l = Math.round(l * 100);
   //console.log("hsl", h, s, l);
   return h, s, l;
 }
+*/
 
 /**
  * converts RGB values to HSV values
  * @param {Number} red
  * @param {Number} green
  * @param {Number} blue
- * @returns {Array} hsColor - array of h and s
+ * @returns {Array} [h, s, v] - array of h and s
  */
 function rgbToHsv(red, green, blue) {
   (red /= 255), (green /= 255), (blue /= 255);
@@ -175,29 +137,17 @@ function rgbToHsv(red, green, blue) {
   }
   h = Math.floor(h * 360);
 
-  hsColor = [];
-
-  hsColor.push(h, s, v);
-  //console.log("hsv(" + h + "," + Math.floor(s * 100) + "%," + Math.floor(v * 100) + "%)");
-
-  hsColors.push(hsColor);
-  //console.log(hsColors);
-
-  return hsColor;
+  return [h, s, v];
 }
 
 /**
  * Gets the color name.
- * 
+ *
  * ! Its important to note that too much light on the image can return the wrong colorname
- * @param {Array} hsColor 
+ * @param {Array} hsv return from rgbToHSV
  * @returns {String} colorName
  */
-function getHSV_ColorName(hsColor) {
-  h = hsColor[0];
-  s = hsColor[1];
-  v = hsColor[2];
-
+function getHSV_ColorName([h, s, v]) {
   if (s < 0.25) {
     colorName = "white";
     return colorName;
@@ -213,7 +163,6 @@ function getHSV_ColorName(hsColor) {
     colorName = v == 1 ? "white" : "blue";
   }
 
-  //console.log(colorName);
   return colorName;
 }
 
