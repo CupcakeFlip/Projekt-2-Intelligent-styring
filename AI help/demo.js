@@ -1,49 +1,87 @@
-(function () {
-  var start, progressHandle;
+let color = [
+  [
+    "yellow",
+    "blue",
+    "blue",
+    "orange",
+    "green",
+    "orange",
+    "green",
+    "green",
+    "white",
+  ],
+  [
+    "yellow",
+    "orange",
+    "orange",
+    "yellow",
+    "red",
+    "green",
+    "blue",
+    "white",
+    "green",
+  ],
+  [
+    "green",
+    "red",
+    "blue",
+    "white",
+    "white",
+    "blue",
+    "green",
+    "white",
+    "orange",
+  ],
+  [
+    "orange",
+    "yellow",
+    "red",
+    "red",
+    "yellow",
+    "green",
+    "yellow",
+    "orange",
+    "red",
+  ],
+  [
+    "red",
+    "red",
+    "orange",
+    "yellow",
+    "orange",
+    "white",
+    "blue",
+    "yellow",
+    "white",
+  ],
+  ["white", "blue", "yellow", "red", "blue", "blue", "white", "green", "red"],
+];
 
-  var progress = function () {
-    // Add a dot each second
-    $("#status").text(function (index, text) {
-      return text + ".";
-    });
-  };
+let cubeState = [];
 
-  var initialized = function () {
-    // Precomputing finished, stop adding dots
-    clearInterval(progressHandle);
+function idk() {
+  const orders = [0, 2, 3, 1, 4, 5];
+  for (let i = 0; i < orders.length; i++) {
+    let order = orders[i];
+    for (let j = 0; j < 9; j++) {
+      c = color[order][j];
 
-    // Show the duration of initialization
-    var end = new Date(),
-      duration = (end - start) / 1000;
-    $("#status").text("Initialization done in " + duration + " seconds.");
+      if (c == "red") {
+        cubeState.push("r");
+      } else if (c == "orange") {
+        cubeState.push("l");
+      } else if (c == "white") {
+        cubeState.push("d");
+      } else if (c == "yellow") {
+        cubeState.push("u");
+      } else if (c == "green") {
+        cubeState.push("b");
+      } else if (c == "blue") {
+        cubeState.push("f");
+      }
+    }
+  }
+  console.log(cubeState);
+}
 
-    // Show the scrambler
-    $("#randomstate").css("visibility", "visible");
-    $("#randomstate button").on("click", generateScramble);
-  };
-
-  var generateScramble = function () {
-    // Hide the initialization status on first scramble
-    $("#status").hide();
-
-    // Generate a scramble
-    Cube.asyncScramble(function (alg) {
-      var s = alg.replace(/\s+/g, ""), // remove spaces
-        url = "http://cube.rider.biz/visualcube.png?size=150&alg=" + s;
-      $("#randomstate .result").html(alg + '<br><img src="' + url + '">');
-    });
-  };
-
-  $(function () {
-    $("#status").text("Initializing");
-
-    // Start measuring time
-    start = new Date();
-
-    // Start adding dots
-    progressHandle = setInterval(progress, 1000);
-
-    // Start precomputing
-    Cube.asyncInit("/cubejs/lib/worker.js", initialized);
-  });
-})();
+idk();

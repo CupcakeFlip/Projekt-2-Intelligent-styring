@@ -5,24 +5,24 @@
 //const solver1 = new rubiksCubeSolver.Solver;
 
 /*
-front face is green, 
-up face is white, 
+front face is blue, 
+up face is yellow, 
 right face is red,
-back face is blue, 
+back face is green, 
 left face is orange, 
-down face is yellow.
+down face is white.
 
 Go through all the faces in this order: 
 front, right, up, down, left, back,
 */
 
 /* let cubeState = [
-  "flulfbddr", // front
-  "rudrruddl", // right
-  "dbbburrfb", // up
-  "llffdrubf", // down
-  "rludlubrf", // left
-  "lubfbfudl", // back
+  "flulfbddr", // front 0
+  "rudrruddl", // right 1
+  "dbbburrfb", // up 2
+  "llffdrubf", // down 3
+  "rludlubrf", // left 4
+  "lubfbfudl", // back 5
 ].join(""); */
 
 let cubeState = [];
@@ -33,18 +33,18 @@ function colorToSide(color) {
     for (let j = 0; j < 9; j++) {
       c = color[i][j];
 
-      if (c == "white") {
-        cubeState.push("u");
+      if (c == "orange") {
+        cubeState.push("l");
       } else if (c == "red") {
         cubeState.push("r");
-      } else if (c == "orange") {
-        cubeState.push("l");
-      } else if (c == "yellow") {
+      } else if (c == "white") {
         cubeState.push("d");
+      } else if (c == "yellow") {
+        cubeState.push("u");
       } else if (c == "green") {
-        cubeState.push("f");
-      } else if (c == "blue") {
         cubeState.push("b");
+      } else if (c == "blue") {
+        cubeState.push("f");
       }
     }
   }
@@ -55,11 +55,7 @@ function colorToSide(color) {
 
   solver.solve();
 
-  console.log(cubeStateString);
   const moves = solver.getMoves();
-  console.log(moves);
-
-  cubeMoves.innerHTML = `Moves: ${moves}`;
 
   cases = moves.replace(/prime/g, "'");
 
@@ -70,9 +66,6 @@ function colorToSide(color) {
   cases = cases.replace(/L L/g, "L2");
   cases = cases.replace(/D D/g, "D2");
 
-
-  console.log(cases);
-
   drawCube(cases);
 
   return cubeStateString;
@@ -81,12 +74,28 @@ function colorToSide(color) {
 function drawCube(cases) {
   canvas.style.display = "none";
   TTk.AlgorithmPuzzle(3)
-    .size({ width: 1000, height: 600 })
-    .case(cases)(cube);
+    .size({ width: 1500, height: 500 })
+    // Whether to show buttons on hover
+    .hoverButtons(false)
+    // Whether to show alg on hover
+    .hoverAlg(false)
+    .case(cases)("#t1");
 }
 
 //solver.solve();
 
 /*
 Uprime F U U Fprime Uprime F F D D B B D Fprime Uprime R U D D F D Fprime Dprime F D Fprime D D L D Lprime Dprime R D D Rprime D Bprime Dprime B D B Dprime Bprime Dprime Rprime D R D D Lprime Dprime L D D Lprime D L B Rprime Bprime Dprime B D R Dprime Bprime L2 F2 Lprime Bprime L F2 Lprime B Lprime D D
+*/
+
+/*
+Front: BFRLFFRDR
+Right: BBBRRFBBU
+up: DBUDUUDDU
+down: FLDRDDRBL
+back: LRFUBLFLD
+left: LRLULFFUU
+
+
+DBUDUUDDUBBBRRFBBUBFRLFFRDRFLDRDDRBLLRLULFFUULRFUBLFLD
 */

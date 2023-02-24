@@ -137,6 +137,8 @@ function rgbToHsv(red, green, blue) {
   }
   h = Math.floor(h * 360);
 
+  console.log(h, s, v);
+
   return [h, s, v];
 }
 

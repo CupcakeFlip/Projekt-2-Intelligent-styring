@@ -3,13 +3,40 @@ h1,
   text-align: center;
 }
 
+h1 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
 canvas {
   display: inline;
   width: 600px;
   height: 600px;
 }
 
-body>svg{
-	position:fixed;
-	
+#ttk-vis-vis0 {
+  position: fixed;
+  left: 18px;
+}
+
+button {
+  background-color: #9245a2; /* Green background */
+  border: none; /* Remove border */
+  color: white; /* White text */
+  padding: 12px 32px; /* Padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Display as inline-block */
+  font-size: 16px; /* Font size */
+  margin: 4px 2px; /* Margin */
+  cursor: pointer; /* Add cursor */
+  border-radius: 50px; /* Rounded corners */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Add shadow */
+  transition: all 0.3s ease 0s; /* Add transition */
+}
+
+button:hover {
+  background-color: #70357b; /* Dark green on hover */
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+  transform: translateY(-7px); /* Move up on hover */
 }

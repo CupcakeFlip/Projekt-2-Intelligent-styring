@@ -15,7 +15,7 @@ const images = [];
 } */
 
 for (let i = 1; i <= 6; i++) {
-  images.push("picture/testCube/testCube (" + i + ").jpg");
+  images.push("picture/testCube3/testCube (" + i + ").jpg");
 }
 
 let currentImageIndex = 0;
@@ -114,3 +114,22 @@ function displayColorNames(colorName, x, y) {
 
   ctx.fillText(colorName, x * 200 + 80, y * 200 + 135);
 }
+
+
+/**
+ * Snap Button
+ * takes a picture
+ * and starts to analyse the picture
+ * 
+ * Save Button
+ * if the analyse of the picture is correct, then push button
+ * if not correct tap try again button
+ * 
+ * Try again button
+ * if the analyse of the picture is incorrect.
+ * and there is a need to take another picture
+ * 
+ * implementation of wich side to take next picture of
+ * blue - yellow - white - red - green - orange
+ * 
+ */
