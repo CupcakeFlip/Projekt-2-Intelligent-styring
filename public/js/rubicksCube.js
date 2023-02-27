@@ -1,9 +1,4 @@
-//const solver = require("rubiks-cube-solver");
-
-//const solver = rubiksCubeSolver.Solver;
-
-//const solver1 = new rubiksCubeSolver.Solver;
-
+const cube = document.getElementById("3DCube");
 /*
 front face is blue, 
 up face is yellow, 
@@ -14,6 +9,10 @@ down face is white.
 
 Go through all the faces in this order: 
 front, right, up, down, left, back,
+front right back left up down
+0-0   1-1   2-5  3-4  4-2  5-3 
+
+0-1-4-5-3-2
 */
 
 /* let cubeState = [
@@ -25,13 +24,16 @@ front, right, up, down, left, back,
   "lubfbfudl", // back 5
 ].join(""); */
 
-let cubeState = [];
+const order = [0, 1, 4, 5, 3, 2]; // so you can take pictures around the cube before having to take the top and bottom.
+
 let cases = "";
 // It recreates the colors into the right side
 function colorToSide(color) {
+  let cubeState = [];
+  let cubeStateString = "";
   for (let i = 0; i < 6; i++) {
     for (let j = 0; j < 9; j++) {
-      c = color[i][j];
+      c = color[order[i]][j];
 
       if (c == "orange") {
         cubeState.push("l");
@@ -49,38 +51,101 @@ function colorToSide(color) {
     }
   }
 
-  const cubeStateString = cubeState.join("");
+  cubeStateString = cubeState.join("");
 
-  const solver = new rubiksCubeSolver.Solver(cubeStateString);
+  console.log(cubeStateString);
+  let solver = new rubiksCubeSolver.Solver(cubeStateString);
+  //solver = new rubiksCubeSolver.Solver("rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr"); // Test case
 
   solver.solve();
 
   const moves = solver.getMoves();
 
-  cases = moves.replace(/prime/g, "'");
-
-  cases = cases.replace(/U U/g, "U2");
-  cases = cases.replace(/F F/g, "F2");
-  cases = cases.replace(/R R/g, "R2");
-  cases = cases.replace(/B B/g, "B2");
-  cases = cases.replace(/L L/g, "L2");
-  cases = cases.replace(/D D/g, "D2");
+  // making sure that the moves amount gets more compact, so they fill less
+  cases = moves
+    .replace(/prime/g, "'")
+    .replace(/([UFBRDL])' \1'/g, `$12`)
+    .replace(/([UFBRDL])' \1/g, "")
+    .replace(/([UFBRDL]) \1'/g, "")
+    .replace(/([UFBRDL]) \1/g, "$12");
 
   drawCube(cases);
 
-  return cubeStateString;
+  return;
 }
 
 function drawCube(cases) {
-  canvas.style.display = "none";
+  resultCanvas.style.display = "none";
   TTk.AlgorithmPuzzle(3)
     .size({ width: 1500, height: 500 })
     // Whether to show buttons on hover
     .hoverButtons(false)
     // Whether to show alg on hover
     .hoverAlg(false)
-    .case(cases)("#t1");
+    .movePeriod(300)
+    .case(cases)("cube");
 }
+
+// Test cases
+[
+  ["red", "orange", "blue", "yellow", "blue", "blue", "red", "yellow", "green"],
+  [
+    "orange",
+    "yellow",
+    "yellow",
+    "white",
+    "red",
+    "orange",
+    "yellow",
+    "white",
+    "blue",
+  ],
+  [
+    "orange",
+    "white",
+    "green",
+    "green",
+    "green",
+    "blue",
+    "yellow",
+    "blue",
+    "red",
+  ],
+  [
+    "white",
+    "green",
+    "green",
+    "red",
+    "orange",
+    "red",
+    "white",
+    "white",
+    "green",
+  ],
+  [
+    "orange",
+    "orange",
+    "blue",
+    "red",
+    "yellow",
+    "green",
+    "white",
+    "yellow",
+    "white",
+  ],
+  [
+    "yellow",
+    "blue",
+    "orange",
+    "red",
+    "white",
+    "green",
+    "blue",
+    "orange",
+    "red",
+  ],
+];
+("rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr");
 
 //solver.solve();
 
@@ -98,4 +163,34 @@ left: LRLULFFUU
 
 
 DBUDUUDDUBBBRRFBBUBFRLFFRDRFLDRDDRBLLRLULFFUULRFUBLFLD
+
+rlfu f frub
+luud r ludf
+llfr u bdud
+uflr d bflr
+dbbr l rddb
+ldbb b fufr
+
+rlfu f frub
+luud r ludf
+llfr u bdud
+uflr d bflr
+dbbr l rddb
+ldbb b fufr
+RLFUFFRUB
+LUUDRLUDF
+LLFRUBDUD
+UFLRDBFLR
+DBBRLRDDB
+LDBBBFUFR
+
+LLFRUBDUDLUUDRLUDFRLFUFFRUBUFLRDBFLRDBBRLRDDBLDBBBFUFR
+
+bfrl f frdr bbbr r fbbu dbud u uddu fldr d drbl lrlu l ffuu lrfu b lfld
+rlfu f frub luud r ludf llfr u bdud uflr d bflr dbbr l rddb ldbb b fufr
+
+rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr
+rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr
+rlfuffrlbluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr
+rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr
 */

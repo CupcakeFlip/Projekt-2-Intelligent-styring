@@ -86,3 +86,11 @@ Fået overført farverne til en defineret side for den farve hvor af:
 jeg har også fundet en anden API som kan tegne en rubiks cube på siden i 3D, og hvor den kan visualisere løsningen for hvert trin, så man nemt kan følge med.
 
 Omg den ser så cool ud!😎
+
+---
+
+## 24-02-2023 og 25-02-2023
+
+Programmet er færdigt, det kan nu få billede inputs gennem kameraet på computeren.
+analysere billederne, sige hvilke farver der er hvor, konvertere de farver om til de svarende sider.
+sende siderne til API'en, som så finder en løsning til den, som så bliver sendt videre til en anden API, som laver en visuel 3D cube på siden som kan illustrere hvordan cuben skal løses.

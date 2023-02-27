@@ -4,17 +4,20 @@
     <meta charset="UTF-8" />
 
     <!-- javascript -->
-    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/rubiks-cube-solver@1.2.0/lib/index.common.min.js"></script>
 
     <!--http://cube.rider.biz/twistysim.html-->
     <script src="http://cube.rider.biz/twistysim.js"></script>
 
     <!-- Egen javascript -->
-    <!--<script src="js/py_cam.js" defer></script>-->
     <script src="js/main.js" defer></script>
     <script src="js/rubicksCube.js" defer></script>
     <script src="js/color.js" defer></script>
+    <!--
+
+     <script src="js/py_cam.js" defer></script>
+    -->
 
     <link rel="stylesheet" href="css/pretty.css" />
 
@@ -23,19 +26,18 @@
 
   <body>
     <div id="can">
-      <h1>Simple ESP32CAM with MicroPython demo</h1>
-      
+      <h1 id="header">Simple ESP32CAM with MicroPython demo</h1>
 
-      <button id="backButton">Back</button>
-      <button id="nextButton">Next</button>
+      <button id="tryAgainButton">Try Again</button>
+      <button id="snapButton">Take Picture</button>
       <button id="saveButton">Save</button>
-      <div id="cubeMoves"></div>
-      <!--
+      <button id="resetButton">Reset</button>
+      <div id="divText"></div>
 
-  <img id="cam" src="http://172.20.10.9/live" crossorigin="anonymous" />
-  <canvas style="display: none"></canvas>
--->
-      <canvas id="canvas"></canvas>
+      <canvas id="videoCanvas"></canvas>
+      <video id="video"></video>
+      <canvas id="resultCanvas" style="display: none"></canvas>
+      <div id="3DCube" style="display: none"></div>
     </div>
   </body>
 </html>

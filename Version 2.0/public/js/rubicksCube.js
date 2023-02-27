@@ -51,6 +51,8 @@ function colorToSide(color) {
 
   const cubeStateString = cubeState.join("");
 
+  console.log(cubeStateString);
+
   const solver = new rubiksCubeSolver.Solver(cubeStateString);
 
   solver.solve();
@@ -79,8 +81,67 @@ function drawCube(cases) {
     .hoverButtons(false)
     // Whether to show alg on hover
     .hoverAlg(false)
+    .movePeriod(300)
     .case(cases)("#t1");
 }
+
+function gg() {
+  const solver = new rubiksCubeSolver.Solver(
+    "rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr"
+  );
+
+  solver.solve();
+
+  const moves = solver.getMoves();
+  console.log(moves);
+/* 
+  cases = moves.replace(/prime/g, "'");
+
+  cases = cases.replace(/U' U'/g, "U2");
+  cases = cases.replace(/F' F'/g, "F2");
+  cases = cases.replace(/R' R'/g, "R2");
+  cases = cases.replace(/B' B'/g, "B2");
+  cases = cases.replace(/L' L'/g, "L2");
+  cases = cases.replace(/D' D'/g, "D2");
+
+  cases = cases.replace(/U' U/g, "");
+  cases = cases.replace(/F' F/g, "");
+  cases = cases.replace(/R' R/g, "");
+  cases = cases.replace(/B' B/g, "");
+  cases = cases.replace(/L' L/g, "");
+  cases = cases.replace(/D' D/g, "");
+
+  cases = cases.replace(/U U'/g, "");
+  cases = cases.replace(/F F'/g, "");
+  cases = cases.replace(/R R'/g, "");
+  cases = cases.replace(/B B'/g, "");
+  cases = cases.replace(/L L'/g, "");
+  cases = cases.replace(/D D'/g, "");
+
+  cases = cases.replace(/U U/g, "U2");
+  cases = cases.replace(/F F/g, "F2");
+  cases = cases.replace(/R R/g, "R2");
+  cases = cases.replace(/B B/g, "B2");
+  cases = cases.replace(/L L/g, "L2");
+  cases = cases.replace(/D D/g, "D2"); */
+
+cases = moves
+  .replace(/prime/g, "'")
+  .replace(/([UFBRDL])' \1'/g, `$12`)
+  .replace(/([UFBRDL])' \1/g, "")
+  .replace(/([UFBRDL]) \1'/g, "")
+  .replace(/([UFBRDL]) \1/g, "$12")
+
+
+
+  drawCube(cases);
+}
+gg();
+
+/*
+Uprime Uprime Lprime U U Fprime Uprime R U Uprime F U Bprime D F Dprime Fprime D D Rprime Dprime R D D R Dprime Rprime D Bprime Dprime B D B D Bprime D D Fprime Dprime F D Lprime Dprime L D Lprime Dprime L R F D Fprime Dprime Rprime L B Dprime Bprime Dprime B D Bprime Lprime B D Bprime Dprime Bprime L B Lprime Dprime
+
+*/
 
 //solver.solve();
 

@@ -3,9 +3,11 @@ let h, s, v, colorName;
 
 /**
  * Analyses the image on the canvas, to find the colors from the middle of the 9 squares. It takes the average of 5 pixels in each square, and returns that to an array.
+ *
+ * @param {*} ctx
  * @returns {Array}sumColorArray, that contains the 9 colors from the current image
  */
-function analyseImage() {
+function analyseImage(ctx) {
   // making sure to clear array every time function is called.
   colorNames = [];
 
@@ -41,7 +43,9 @@ function analyseImage() {
 
       colorNames.push(getHSV_ColorName([h, s, v]));
 
-      displayColorNames(colorName, x, y);
+      console.log(colorNames);
+
+      displayColorNames(colorName, x, y, ctx);
 
       // Display the color of 9 pixels in the resultDiv
       //resultDiv.innerHTML = `Colors: ${hsColors.join(", ")}`;
@@ -153,7 +157,7 @@ function getHSV_ColorName([h, s, v]) {
   if (s < 0.25) {
     colorName = "white";
     return colorName;
-  } else if (h < 15 || h > 300) {
+  } else if (h < 7 || h > 300) {
     colorName = "red";
   } else if (h < 43) {
     colorName = "orange";

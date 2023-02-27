@@ -8,8 +8,23 @@ h1 {
   margin-bottom: 5px;
 }
 
+body {
+  background-color: rgb(76, 76, 76);
+}
+
+#divText,
+h1 {
+  color: floralwhite;
+}
+
 canvas {
   display: inline;
+  width: 600px;
+  height: 600px;
+}
+
+video {
+  display: none;
   width: 600px;
   height: 600px;
 }
@@ -22,13 +37,12 @@ canvas {
 button {
   background-color: #9245a2; /* Green background */
   border: none; /* Remove border */
-  color: white; /* White text */
+  color: floralwhite; /* White text */
   padding: 12px 32px; /* Padding */
   text-align: center; /* Center text */
-  text-decoration: none; /* Remove underline */
   display: inline-block; /* Display as inline-block */
   font-size: 16px; /* Font size */
-  margin: 4px 2px; /* Margin */
+  margin: 4px 15px; /* Margin */
   cursor: pointer; /* Add cursor */
   border-radius: 50px; /* Rounded corners */
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); /* Add shadow */

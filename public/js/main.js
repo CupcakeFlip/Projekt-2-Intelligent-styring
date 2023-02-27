@@ -1,86 +1,125 @@
-const canvas = document.getElementById("canvas");
-const backButton = document.getElementById("backButton");
-const nextButton = document.getElementById("nextButton");
+const tryAgainButton = document.getElementById("tryAgainButton");
+const snapButton = document.getElementById("snapButton");
 const saveButton = document.getElementById("saveButton");
-const cubeMoves = document.getElementById("cubeMoves");
-const cube = document.getElementById("3DCube");
-//const result2Div = document.getElementById("result2");
+const resetButton = document.getElementById("resetButton");
 
-const ctx = canvas.getContext("2d");
+const video = document.getElementById("video");
+const canvas = document.getElementById("videoCanvas");
+const resultCanvas = document.getElementById("resultCanvas");
+const div = document.getElementById("divText");
+const result = document.getElementById("header");
 
-const images = [];
+ctx = canvas.getContext("2d");
 
-/*for (let i = 1; i <= 17; i++) {
-  images.push("picture/cube (" + i + ").jpg");
-} */
+const ctxResult = resultCanvas.getContext("2d");
 
-for (let i = 1; i <= 6; i++) {
-  images.push("picture/testCube3/testCube (" + i + ").jpg");
+let counter = 0;
+let allColorNames = [];
+
+const camOrientation = ["blue", "red", "green", "orange", "yellow", "white"];
+const upOrientation = ["yellow", "yellow", "yellow", "yellow", "blue", "green"];
+
+// Get access to the camera and stream video to the video element
+navigator.mediaDevices
+  .getUserMedia({ video: true })
+  .then((stream) => {
+    div.innerHTML = `Make sure that the ${camOrientation[counter]} is facing the camera, while the ${upOrientation[counter]} is facing up`;
+    video.srcObject = stream;
+    video.onloadedmetadata = () => {
+      video.play();
+      drawOnCanvas();
+    };
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+function drawOnCanvas() {
+  // Set the dimensions of the canvas to match the video
+  canvas.width = 600;
+  canvas.height = 600;
+
+  // Draw the video stream on the canvas
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  for (let x = 0; x < 3; x++) {
+    for (let y = 0; y < 3; y++) {
+      ctx.fillStyle = "black";
+      ctx.strokeRect(x * 200, y * 200, 200, 200);
+      ctx.strokeRect(x * 200 + 75, y * 200 + 75, 50, 50);
+    }
+  }
+
+  // Call this function again to update the canvas
+  requestAnimationFrame(drawOnCanvas);
 }
 
-let currentImageIndex = 0;
-let currentImage = new Image();
-currentImage.src = images[currentImageIndex];
+function takePhoto() {
+  // Draw the snapshot of the video on a new canvas
+  cube.style.display = "none";
+  canvas.style.display = "none";
+  resultCanvas.style.display = "inline";
+  resultCanvas.width = 600;
+  resultCanvas.height = 600;
+  // Draw the snapshot canvas on the result canvas
+  ctxResult.drawImage(video, 0, 0, resultCanvas.width, resultCanvas.height);
 
-const targetWidth = 600;
-const targetHeight = 600;
+  analyseImage(ctxResult);
+}
 
-currentImage.addEventListener("load", function () {
-  canvas.width = targetWidth;
-  canvas.height = targetHeight;
-  ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
-  analyseImage();
-});
+snapButton.addEventListener("click", takePhoto);
 
-nextButton.addEventListener("click", function () {
-  allColorNames.push(colorNames);
-  console.log(allColorNames);
-  counter++;
-  if (counter === 6) {
-    colorToSide(allColorNames);
-
-    // resets the counter and the array of colornames
-    counter = 0;
-    allColorNames = [];
+document.addEventListener("keydown", function (event) {
+  // Check if the key pressed is the spacebar
+  if (event.key === " " || event.key === "Spacebar") {
+    // Prevent the default spacebar behavior (scrolling the page down)
+    event.preventDefault();
+    // Call the function
+    takePhoto();
   }
-  // go to next image, or start over if at end of array
-  currentImageIndex = (currentImageIndex + 1) % images.length;
-  currentImage = new Image();
-  currentImage.src = images[currentImageIndex];
-  // redraw the canvas with the new image, and calls the function
-  currentImage.onload = function () {
-    ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
-    analyseImage();
-  };
 });
 
-backButton.addEventListener("click", function () {
-  // go to the previous image, or start over if at start of array
-  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-  currentImage = new Image();
-  currentImage.src = images[currentImageIndex];
-  // redraw the canvas with the new image and calls the function
-  currentImage.onload = function () {
-    ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
-    analyseImage();
-  };
+tryAgainButton.addEventListener("click", function () {
+  // goes back to photomode
+  canvas.style.display = "inline";
+  resultCanvas.style.display = "none";
+  cube.style.display = "none";
+  cubeState = [];
+  cubeStateString = "";
+  ctxResult.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
 });
 
-let allColorNames = [];
-let counter = 0;
 saveButton.addEventListener("click", function () {
   allColorNames.push(colorNames);
   console.log(allColorNames);
 
   counter++;
+  div.innerHTML = `Make sure that the ${camOrientation[counter]} is facing the camera, while the ${upOrientation[counter]} is facing up`;
+  result.innerHTML = `The colors have been saved. You have now saved ${counter} images`;
   if (counter === 6) {
     colorToSide(allColorNames);
-
+    div.style.display = "none";
     // resets the counter and the array of colornames
     counter = 0;
     allColorNames = [];
+    return;
   }
-}); 
+  canvas.style.display = "inline";
+  resultCanvas.style.display = "none";
+  cube.style.display = "none";
+  ctxResult.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+});
+
+resetButton.addEventListener("click", function () {
+  counter = 0;
+  allColorNames = [];
+  result.innerHTML = "All Data has been reset.";
+  canvas.style.display = "inline";
+  resultCanvas.style.display = "none";
+  cube.style.display = "none";
+  cubeState = [];
+  cubeStateString = "";
+});
 
 /**
  * Draws on the canvas, and captures where the pixelvalues are located,
@@ -90,7 +129,7 @@ saveButton.addEventListener("click", function () {
  * @param {number} x - x position
  * @param {number} y - y position
  */
-function displayColorNames(colorName, x, y) {
+function displayColorNames(colorName, x, y, ctx) {
   ctx.fillStyle = colorName;
   ctx.fillRect(x * 200 + 75, y * 200 + 75, 50, 50);
   ctx.fillStyle = "black";
@@ -115,21 +154,26 @@ function displayColorNames(colorName, x, y) {
   ctx.fillText(colorName, x * 200 + 80, y * 200 + 135);
 }
 
-
 /**
  * Snap Button
  * takes a picture
  * and starts to analyse the picture
- * 
+ *
  * Save Button
  * if the analyse of the picture is correct, then push button
  * if not correct tap try again button
- * 
+ *
  * Try again button
  * if the analyse of the picture is incorrect.
  * and there is a need to take another picture
- * 
+ *
+ * new cube button
+ *        gotte replace each other
+ * generate solution button
+ *
+ * restet button
+ *
  * implementation of wich side to take next picture of
  * blue - yellow - white - red - green - orange
- * 
+ *
  */
