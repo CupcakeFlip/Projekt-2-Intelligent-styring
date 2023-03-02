@@ -3,9 +3,9 @@ let h, s, v, colorName;
 
 /**
  * Analyses the image on the canvas, to find the colors from the middle of the 9 squares. It takes the average of 5 pixels in each square, and returns that to an array.
- *
- * @param {*} ctx
- * @returns {Array}sumColorArray, that contains the 9 colors from the current image
+ * 
+ * @param {*} ctx 
+ * @returns 
  */
 function analyseImage(ctx) {
   // making sure to clear array every time function is called.
@@ -32,11 +32,11 @@ function analyseImage(ctx) {
         totalBlue += pixelData[2];
       }
 
-      const numColors = 5;
+      const numPix = 5;
 
-      const red = Math.round(totalRed / numColors);
-      const green = Math.round(totalGreen / numColors);
-      const blue = Math.round(totalBlue / numColors);
+      const red = Math.round(totalRed / numPix);
+      const green = Math.round(totalGreen / numPix);
+      const blue = Math.round(totalBlue / numPix);
 
       const [h, s, v] = rgbToHsv(red, green, blue);
 

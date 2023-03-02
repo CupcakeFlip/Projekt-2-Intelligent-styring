@@ -45,8 +45,8 @@ function drawOnCanvas() {
   for (let x = 0; x < 3; x++) {
     for (let y = 0; y < 3; y++) {
       ctx.fillStyle = "black";
-      ctx.strokeRect(x * 200, y * 200, 200, 200);
-      ctx.strokeRect(x * 200 + 75, y * 200 + 75, 50, 50);
+      ctx.strokeRect(x * 200, y * 200, 200, 200); // Draws the big rectangles
+      ctx.strokeRect(x * 200 + 75, y * 200 + 75, 50, 50); // Draws the small rectangles
     }
   }
 
@@ -124,17 +124,18 @@ resetButton.addEventListener("click", function () {
 /**
  * Draws on the canvas, and captures where the pixelvalues are located,
  * it also writes the name of the color
+ *
  * @param {string} color - RGB value for the pixel values
- * @param {number} sumColor - delete
  * @param {number} x - x position
  * @param {number} y - y position
+ * @param {*} ctx - gives the context of where to draw
  */
 function displayColorNames(colorName, x, y, ctx) {
   ctx.fillStyle = colorName;
-  ctx.fillRect(x * 200 + 75, y * 200 + 75, 50, 50);
+  ctx.fillRect(x * 200 + 75, y * 200 + 75, 50, 50); // fills the small rectangles
   ctx.fillStyle = "black";
-  ctx.strokeRect(x * 200, y * 200, 200, 200);
-  ctx.strokeRect(x * 200 + 75, y * 200 + 75, 50, 50);
+  ctx.strokeRect(x * 200, y * 200, 200, 200); // draws the big rectangles
+  ctx.strokeRect(x * 200 + 75, y * 200 + 75, 50, 50); // draws the small rectangles
 
   const textWidth = ctx.measureText(colorName).width;
 
@@ -145,12 +146,9 @@ function displayColorNames(colorName, x, y, ctx) {
   const rectHeight = 15;
 
   ctx.fillStyle = "white";
-
-  // Draw the rectangle
-  ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+  ctx.fillRect(rectX, rectY, rectWidth, rectHeight); // Draw the rectangle under the text
 
   ctx.fillStyle = "black";
-
   ctx.fillText(colorName, x * 200 + 80, y * 200 + 135);
 }
 
