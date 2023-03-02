@@ -16,10 +16,9 @@ function analyseImage(ctx) {
       let totalRed = 0;
       let totalGreen = 0;
       let totalBlue = 0;
-      /**
-       * finds 5 pixel data and pushes them into an array.
-       */
+
       for (let n = 0; n < 5; n++) {
+        // finds 5 pixel data and pushes them into an array.
         const pixelData = ctx.getImageData(
           x * 200 + 90 + n * 5,
           y * 200 + 90 + n * 5,
@@ -46,68 +45,17 @@ function analyseImage(ctx) {
       console.log(colorNames);
 
       displayColorNames(colorName, x, y, ctx);
-
-      // Display the color of 9 pixels in the resultDiv
-      //resultDiv.innerHTML = `Colors: ${hsColors.join(", ")}`;
     }
   }
   return;
 }
 
 /**
- * converts RGB values to HSL values
- * @param {number} red
- * @param {number} green
- * @param {number} blue
- * @returns h, s, l
- */
-/*
-function rgbToHsl(red, green, blue) {
-  (red /= 255), (green /= 255), (blue /= 255);
-  
-  const max = Math.max(red, green, blue);
-  const min = Math.min(red, green, blue);
-  const diff = max - min;
-  
-  let h,
-  s,
-  l = (max + min) / 2;
-  
-  if (diff === 0) {
-    h = 0;
-  } else if (max === red) {
-    h = ((green - blue) / diff) % 6;
-  } else if (max === green) {
-    h = (blue - red) / diff + 2;
-  } else {
-    h = (red - green) / diff + 4;
-  }
-  
-  h = Math.round(h * 60);
-  
-  if (h < 0) {
-    h += 360;
-  }
-  
-  if (diff === 0) {
-    s = 0;
-  } else {
-    s = diff / (1 - Math.abs(2 * l - 1));
-  }
-  
-  s = Math.round(s * 100);
-  l = Math.round(l * 100);
-  //console.log("hsl", h, s, l);
-  return h, s, l;
-}
-*/
-
-/**
- * converts RGB values to HSV values
+ * Converts RGB values to HSV values
  * @param {Number} red
  * @param {Number} green
  * @param {Number} blue
- * @returns {Array} [h, s, v] - array of h and s
+ * @returns {Array} [h, s, v] - array of h, s and v
  */
 function rgbToHsv(red, green, blue) {
   (red /= 255), (green /= 255), (blue /= 255);
@@ -118,7 +66,8 @@ function rgbToHsv(red, green, blue) {
 
   v = max;
 
-  /*checks whether the maximum value of red, green and blue are 0, if true then sets s value to 0, which indicates that the color is grayscale. 
+  /*
+  checks whether the maximum value of red, green and blue are 0, if true then sets s value to 0, which indicates that the color is grayscale. 
   If its false then it sets s value to diff/max.
   */
   s = max == 0 ? 0 : diff / max;
@@ -171,15 +120,3 @@ function getHSV_ColorName([h, s, v]) {
 
   return colorName;
 }
-
-/*
-hue, saturation, lightness:
-(H,S,V) = (hue, saturation, lightness)
-
-Hvid = (0<H<360, S<0.15, L>0.65)
-Red = (H<11, H>360, S>0.7, L>0.1)
-Orange = (11<H<45, S>0.15, L>0.75)
-Gul = (45<H<64,S>0.15, L>0.1)
-Grøn = (64<H<165, S>0.15, L>0.1)
-Blå = (165<H<300, S>0.15, L>0.1)
-*/
