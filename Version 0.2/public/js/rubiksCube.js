@@ -1,4 +1,3 @@
-const cube = document.getElementById("3DCube");
 /*
 front face is blue, 
 up face is yellow, 
@@ -27,8 +26,82 @@ front right back left up down
 const order = [0, 1, 4, 5, 3, 2]; // so you can take pictures around the cube before having to take the top and bottom.
 
 let cases = "";
-// It recreates the colors into the right side
+
+/**
+ * It recreates the colors into the right side
+ *
+ * @param {Array} color - an array with the colors stings
+ * @returns
+ */
 function colorToSide(color) {
+  /*color = [
+    [
+      "red",
+      "orange",
+      "blue",
+      "yellow",
+      "blue",
+      "blue",
+      "red",
+      "yellow",
+      "green",
+    ],
+    [
+      "orange",
+      "yellow",
+      "yellow",
+      "white",
+      "red",
+      "orange",
+      "yellow",
+      "white",
+      "blue",
+    ],
+    [
+      "orange",
+      "white",
+      "green",
+      "green",
+      "green",
+      "blue",
+      "yellow",
+      "blue",
+      "red",
+    ],
+    [
+      "white",
+      "green",
+      "green",
+      "red",
+      "orange",
+      "red",
+      "white",
+      "white",
+      "green",
+    ],
+    [
+      "orange",
+      "orange",
+      "blue",
+      "red",
+      "yellow",
+      "green",
+      "white",
+      "yellow",
+      "white",
+    ],
+    [
+      "yellow",
+      "blue",
+      "orange",
+      "red",
+      "white",
+      "green",
+      "blue",
+      "orange",
+      "red",
+    ],
+  ];*/ // test case
   let cubeState = [];
   let cubeStateString = "";
   for (let i = 0; i < 6; i++) {
@@ -54,7 +127,7 @@ function colorToSide(color) {
   cubeStateString = cubeState.join("");
 
   console.log(cubeStateString);
-  let solver = new rubiksCubeSolver.Solver(cubeStateString);
+  const solver = new rubiksCubeSolver.Solver(cubeStateString);
   //solver = new rubiksCubeSolver.Solver("rlfuffrubluudrludfllfrubduduflrdbflrdbbrlrddbldbbbfufr"); // Test case
 
   solver.solve();
@@ -75,15 +148,17 @@ function colorToSide(color) {
 }
 
 function drawCube(cases) {
+  // draws the cube
   resultCanvas.style.display = "none";
-  TTk.AlgorithmPuzzle(3)
+  let dCube = TTk.AlgorithmPuzzle(3)
     .size({ width: 1500, height: 500 })
     // Whether to show buttons on hover
     .hoverButtons(false)
     // Whether to show alg on hover
     .hoverAlg(false)
     .movePeriod(300)
-    .case(cases)("cube");
+    .case(cases);
+  dCube("#ap1");
 }
 
 // Test cases

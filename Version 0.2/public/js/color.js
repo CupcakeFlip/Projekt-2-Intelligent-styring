@@ -42,8 +42,6 @@ function analyseImage(ctx) {
 
       colorNames.push(getHSV_ColorName([h, s, v]));
 
-      console.log(colorNames);
-
       displayColorNames(colorName, x, y, ctx);
     }
   }

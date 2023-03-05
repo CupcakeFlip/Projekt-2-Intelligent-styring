@@ -9,6 +9,8 @@ const resultCanvas = document.getElementById("resultCanvas");
 const div = document.getElementById("divText");
 const result = document.getElementById("header");
 
+const cube = document.getElementById("ap1");
+
 ctx = canvas.getContext("2d");
 
 const ctxResult = resultCanvas.getContext("2d");
@@ -16,8 +18,9 @@ const ctxResult = resultCanvas.getContext("2d");
 let counter = 0;
 let allColorNames = [];
 
+// Used to tell how to orient the cube
 const camOrientation = ["blue", "red", "green", "orange", "yellow", "white"];
-const upOrientation = ["yellow", "yellow", "yellow", "yellow", "blue", "green"];
+const upOrientation = ["yellow", "yellow", "yellow", "yellow", "green", "blue"];
 
 // Get access to the camera and stream video to the video element
 navigator.mediaDevices
@@ -56,7 +59,6 @@ function drawOnCanvas() {
 
 function takePhoto() {
   // Draw the snapshot of the video on a new canvas
-  cube.style.display = "none";
   canvas.style.display = "none";
   resultCanvas.style.display = "inline";
   resultCanvas.width = 600;
@@ -67,29 +69,17 @@ function takePhoto() {
   analyseImage(ctxResult);
 }
 
-snapButton.addEventListener("click", takePhoto);
-
-document.addEventListener("keydown", function (event) {
-  // Check if the key pressed is the spacebar
-  if (event.key === " " || event.key === "Spacebar") {
-    // Prevent the default spacebar behavior (scrolling the page down)
-    event.preventDefault();
-    // Call the function
-    takePhoto();
-  }
-});
-
-tryAgainButton.addEventListener("click", function () {
-  // goes back to photomode
+function tryAgain() {
+  // Goes back to photomode
   canvas.style.display = "inline";
   resultCanvas.style.display = "none";
-  cube.style.display = "none";
   cubeState = [];
   cubeStateString = "";
   ctxResult.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
-});
+}
 
-saveButton.addEventListener("click", function () {
+function save() {
+  // Saves the color form the image, it also starts the 3Dcube
   allColorNames.push(colorNames);
   console.log(allColorNames);
 
@@ -99,6 +89,7 @@ saveButton.addEventListener("click", function () {
   if (counter === 6) {
     colorToSide(allColorNames);
     div.style.display = "none";
+    cube.style.display = "block";
     // resets the counter and the array of colornames
     counter = 0;
     allColorNames = [];
@@ -106,19 +97,38 @@ saveButton.addEventListener("click", function () {
   }
   canvas.style.display = "inline";
   resultCanvas.style.display = "none";
-  cube.style.display = "none";
-  ctxResult.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
-});
 
-resetButton.addEventListener("click", function () {
+  ctxResult.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+}
+
+function reset() {
+  // Resets everything
   counter = 0;
   allColorNames = [];
   result.innerHTML = "All Data has been reset.";
   canvas.style.display = "inline";
   resultCanvas.style.display = "none";
-  cube.style.display = "none";
   cubeState = [];
   cubeStateString = "";
+  cube.style.display = "none";
+  div.style.display = "block";
+  div.innerHTML = `Make sure that the ${camOrientation[counter]} is facing the camera, while the ${upOrientation[counter]} is facing up`;
+  cube.innerHTML = "";
+  cases = "";
+}
+
+snapButton.addEventListener("click", takePhoto);
+tryAgainButton.addEventListener("click", tryAgain);
+saveButton.addEventListener("click", save);
+resetButton.addEventListener("click", reset);
+document.addEventListener("keydown", function (event) {
+  // Check if the key pressed is the spacebar
+  if (event.key === " " || event.key === "Spacebar") {
+    // Prevent the default spacebar behavior (scrolling the page down)
+    event.preventDefault();
+    // Call the function
+    takePhoto();
+  }
 });
 
 /**
@@ -151,27 +161,3 @@ function displayColorNames(colorName, x, y, ctx) {
   ctx.fillStyle = "black";
   ctx.fillText(colorName, x * 200 + 80, y * 200 + 135);
 }
-
-/**
- * Snap Button
- * takes a picture
- * and starts to analyse the picture
- *
- * Save Button
- * if the analyse of the picture is correct, then push button
- * if not correct tap try again button
- *
- * Try again button
- * if the analyse of the picture is incorrect.
- * and there is a need to take another picture
- *
- * new cube button
- *        gotte replace each other
- * generate solution button
- *
- * restet button
- *
- * implementation of wich side to take next picture of
- * blue - yellow - white - red - green - orange
- *
- */
